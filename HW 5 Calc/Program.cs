@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HW_5_Calc
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
@@ -22,55 +22,123 @@ namespace HW_5_Calc
          - Корень &");
             for (; ; )
             {
+                Console.ResetColor();
+                Console.WriteLine();
                 Console.WriteLine("Вводите через пробел(выход - Alt+F4)");
                 Console.ForegroundColor = ConsoleColor.Red;
-                string text = Console.ReadLine();
-                string[] splitText = text.Split(new char[] { ' ' });
-                double a = double.Parse(splitText[0]), b = double.Parse(splitText[2]);
-                string op = splitText[1];
 
-                Console.WriteLine(' ');
-                if (op == "*")
+                double a = 0, b = 0;
+                string[] splitText = null;
+                bool parse = false;
+                do
                 {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("Результат умножения = {0}", a * b);
-                }
-                if (op == "/" )
-                {
-                    if (b == 0)
+                    try
                     {
-                        Console.WriteLine("Деление на ноль!!!");
-                        continue;
+                        string text = Console.ReadLine();
+                        splitText = text.Split(new char[] { ' ' });
+                        a = double.Parse(splitText[0]);
+                        b = double.Parse(splitText[2]);
+                        parse = true;
                     }
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("Результат деления = {0}", a / b);
-                }
-                if (op == "+")
+                    catch (System.FormatException)
+                    {
+                        Console.WriteLine("Неправильный ввод!");
+                        parse = false;
+                    }
+                } while (!parse);
+                string op = splitText[1];
+                try
                 {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("Результат сложения = {0}", a + b);
+                    Console.WriteLine(' ');
+                    if (op == "*")
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine("Результат умножения = {0}", multiply(a, b));
+                       
+                    }
+                    if (op == "/")
+                    {
+                        if (b == 0)
+                        {
+                            throw new Exception("Деление на ноль!!!");
+                        }
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine("Результат деления = {0}",divide(a,b));
+                    }
+                    if (op == "+")
+                    {
+                        //add(a, b);
+                    }
+                    if (op == "-")
+                    {
+                        substring(a, b);
+                    }
+                    if (op == "^")
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine("Результат возведения числа в степень = {0}", Math.Pow(a, b));
+                    }
+                    if (op == "%")
+                    {
+                        modulo(a, b);
+                    }
+                    if (op == "&")
+                    {
+                        sqrt(a, b);
+
+                    }
+                    Console.ReadKey();
                 }
-                if (op == "-")
+                catch (Exception ex) when (op == "/")
                 {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("Результат вычитания = {0}", a - b);
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Возникло исключение:" + ex.Message);
                 }
-                if (op == "^")
-                {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("Результат возведения числа в степень = {0}", Math.Pow(a, b));
-                }
-                if (op == "%")
-                {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine($"Остаток от деления {a}/{b} = {a % b}"); ;
-                }
-                if (op == "&")
-                {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine($"Корень {a} из {b} = {Math.Pow(a, (1 / b))}");
-                }
-                Console.ReadKey();
+            }
+        }
+        static public double divide(double a, double b)
+        {   
+            return a / b;
+        }
+        static public double multiply(double a, double b)
+        {
+            return a * b;
+        }
+        //static public double add(double a, double b)
+        //{
+            
+        //}
+        static void substring(double a, double b)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Результат вычитания = {0}", a - b);
+        }
+        static public double power(double a, double b)
+        {
+            return Math.Pow(a, b);
+        }
+        static void modulo(double a, double b)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"Остаток от деления {a}/{b} = {a % b}");
+        }
+        static void sqrt(double a, double b)
+        {
+            try
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                double sqrt = Math.Pow(a, (1 / b));
+                if (sqrt.Equals(Double.NaN))
+                    throw new Exception(" \"Result not a number!\" ");
+
+                Console.WriteLine($"Корень {a} из {b} = {sqrt}");
+
+            }
+            catch (Exception ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Возникло исключение:" + ex.Message);
+
             }
         }
     }
