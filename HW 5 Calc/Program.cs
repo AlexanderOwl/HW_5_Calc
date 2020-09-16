@@ -67,7 +67,8 @@ namespace HW_5_Calc
                     }
                     if (op == "+")
                     {
-                        //add(a, b);
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine("Результат сложения = {0}", add(a,b));
                     }
                     if (op == "-")
                     {
@@ -80,11 +81,27 @@ namespace HW_5_Calc
                     }
                     if (op == "%")
                     {
-                        modulo(a, b);
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine($"Остаток от деления {a}/{b} = {modulo(a,b)}");
                     }
                     if (op == "&")
                     {
-                        sqrt(a, b);
+                        try
+                        {
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            double sqrtres = sqrt(a, b);
+                            if (sqrtres.Equals(Double.NaN))
+                                throw new Exception(" \"Result not a number!\" ");
+
+                            Console.WriteLine($"Корень {a} из {b} = {sqrtres}");
+
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Возникло исключение:" + ex.Message);
+
+                        }
 
                     }
                     Console.ReadKey();
@@ -104,10 +121,10 @@ namespace HW_5_Calc
         {
             return a * b;
         }
-        //static public double add(double a, double b)
-        //{
-            
-        //}
+        static public double add(double a, double b)
+        {
+            return a + b;
+        }
         static void substring(double a, double b)
         {
             Console.ForegroundColor = ConsoleColor.Green;
@@ -117,29 +134,13 @@ namespace HW_5_Calc
         {
             return Math.Pow(a, b);
         }
-        static void modulo(double a, double b)
+        static public double modulo(double a, double b)
         {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"Остаток от деления {a}/{b} = {a % b}");
+            return a % b;
         }
-        static void sqrt(double a, double b)
+        static public double sqrt(double a, double b)
         {
-            try
-            {
-                Console.ForegroundColor = ConsoleColor.Green;
-                double sqrt = Math.Pow(a, (1 / b));
-                if (sqrt.Equals(Double.NaN))
-                    throw new Exception(" \"Result not a number!\" ");
-
-                Console.WriteLine($"Корень {a} из {b} = {sqrt}");
-
-            }
-            catch (Exception ex)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Возникло исключение:" + ex.Message);
-
-            }
+            return Math.Pow(a, (1 / b));
         }
     }
 }
