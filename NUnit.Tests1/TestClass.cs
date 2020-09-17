@@ -23,7 +23,6 @@ namespace NUnit.Tests1
         [Test(Description = "Использовал хук с=10 и проверил поднесение в степень функцией power")]
         public void Power10()
         {
-           
             double answer = Program.power(4, c);
             Assert.That(answer, Is.EqualTo(1048576), "Some useful error message");
         }
@@ -32,7 +31,7 @@ namespace NUnit.Tests1
         [TestCase(120, 2,10)]        
         public void Dividing(double a, double b, double expRes)
         {
-             double actRes = Program.divide(a, b + c);
+            double actRes = Program.divide(a, b + c);
             Assert.AreEqual(expRes, actRes);
         }
 
@@ -45,7 +44,6 @@ namespace NUnit.Tests1
         {
             double actRes = Program.multiply(a, b);
             Assert.AreEqual(expRes, actRes);
-            
         }
 
     }
